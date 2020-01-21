@@ -16,7 +16,7 @@ router.get ('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const post = await db("accounts").where("id", req.params.id).select()
-        res.json(accounts)
+        res.json(post)
     } catch (err) {
         next(err)
     }
@@ -25,8 +25,8 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     try {
         const payload = {
-            title: req.body.title,
-            contents:req.body.contents,
+            name: req.body.name,
+            budget: req.body.budget,
         }
         const [id] = await db("accounts").insert(payload)
         res.json(await db("accounts").where("id", id).first())
@@ -38,8 +38,8 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
     try {
         const payload = {
-            title: req.body.title,
-            contents:req.body.contents,
+            name: req.body.name,
+            budget:req.body.budget,
         }
         await db("accounts").where("id", req.params.id).update(payload)
         res.json(await db("accounts").where("id", req.params.id).first())
